@@ -1,0 +1,76 @@
+import csv
+import os
+
+def register():
+    print(" ========================================")
+    print(" Silahkan Registrasi")
+    print(" ========================================")
+    username=(input(" Masukkan username = "))
+    password=(input(" Masukkan password = "))
+    
+    data = []
+    
+    with open('data.csv', 'r') as file:
+        data_user = csv.reader(file, delimiter=',')
+        for row in data_user:
+            data.append({'username': row[0], 'password': row[1]})
+    
+    username_tersedia = False
+    
+    for user in data:
+        if user['username'] == username:
+            print(" Username sudah terdaftar")
+            username_tersedia = True
+            break
+    if username_tersedia == False:
+        userbaru = {'username': username, 'password': password}
+        with open('data.csv', 'a', newline='') as file:
+            
+            writer = csv.writer(file, fieldnames=userbaru.keys())
+            writer.writerow(userbaru)
+    print(" ========================================")
+    print(" Registrasi Berhasil")
+    print(" ========================================")
+    print(login())
+    
+def login():
+    print(" ========================================")
+    print(" Silahkan Login")
+    print(" ========================================")
+    username=(input(" Masukkan username = "))
+    password=(input(" Masukkan password = "))
+    
+    data = []
+    
+    with open('data.csv', 'r') as file:
+        data_user = csv.reader(file, delimiter=',')
+        for row in data_user:
+            data.append({'username': row[0], 'password': row[1]})
+    
+    while [username,password] not in data: 
+            print(" ========================================")
+            print(" Username atau Password salah")
+            print(" Masukkan username dan password kembali")
+            username=(input(" Masukkan username = "))
+            password=(input(" Masukkan password = "))
+            print(" ========================================")
+    else:
+        print(" ========================================")
+        print(" Login Berhasil")
+        print(" ========================================")
+        
+print(" ========================================")
+print(" Selamat Datang di KoperasiNovasi")
+print("1. Register")
+print("2. Login")
+pilihan = input("Register/Login[1/2] : ")
+print(" ========================================")
+
+if pilihan == "1":
+    register()
+elif pilihan == "2":
+    login()
+else:
+    print("Pilihan tidak tersedia")
+
+
